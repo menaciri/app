@@ -1,0 +1,359 @@
+#:import Factory kivy.factory.Factory
+
+<NavigationButton@Button_Item>
+    icon_color: app.theme_cls.text_color
+    text_color: app.theme_cls.text_color
+    button_bg_color: app.theme_cls.primary_color
+    mode: 'color_on_active'
+    badge_disabled: True
+
+<ScreenManager>:
+
+    canvas:
+        Color:
+            rgba: (0, 62/255, 83/255, 1)
+
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<LoginScreen>:
+    name: 'login'
+
+
+
+    MDCard:
+        size_hint: None, None
+        size: 300, 450
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 65
+        spacing: 35
+        orientation: 'vertical'
+        Button:
+            size_hint: None,None
+            size:150,150
+            halign:'center'
+            background_normal: 'ressource/logo.png'
+            pos_hint: {"center_x": 0.5}
+
+        MDTextFieldRound:
+            icon_left: "account-check"
+            hint_text: "Email"
+            id: usernamevalue
+            size_hint_x: None
+            width: 220
+            font_size: 20
+            pos_hint: {"center_x": 0.5}
+
+        MDTextFieldRound:
+            hint_text: "Password"
+            size_hint_x: None
+            width: 220
+            font_size: 20
+            pos_hint: {"center_x": 0.5}
+            icon_left: "key-variant"
+            id: passwordvalue
+            password: True
+
+        MDFillRoundFlatButton:
+            text: 'Login'
+            font_size: 15
+            pos_hint: {"center_x": 0.5}
+            on_press: root.login_button_action()
+
+<FailedLoginScreen>:
+    name:'failedlogin'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        MDLabel:
+            text: "Login Failed"
+        MDRectangleFlatButton:
+            text: 'Back To Login'
+            on_press: root.manager.current = 'login'
+
+<ScreenTest>:
+
+    name:'test'
+    _userid:""
+    orientation:'vertical'
+
+
+    GridLayout:
+
+        rows: 2
+        FloatLayout:
+            size_hint: .2, .2
+            Label:
+                text: root._userid
+                pos_hint:{"center_x": .4, "center_y": .6}
+
+            Button:
+                size_hint: None,None
+                size:40,40
+                halign:'center'
+                background_normal: 'ressource/off.png'
+                background_down: 'ressource/off_v.png'
+                pos_hint:{"center_x": .8, "center_y": .6}
+                on_release: root.close_application()
+
+            Button:
+                size_hint: None,None
+                size:40,40
+                halign:'center'
+                background_normal: 'ressource/button_refresh.png'
+                background_down: 'ressource/button_refresh_v.png'
+                pos_hint:{"center_x": .2, "center_y": .6}
+                on_release:
+                    root.refreshdata()
+
+        ScrollView:
+
+            GridLayout:
+                id: grid_test
+                cols: 1
+                padding: .7,.7
+                spacing: .7,.7
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 120
+
+    AKBottomNavigation2:
+        bg_color: app.theme_cls.bg_darkest
+
+        NavigationButton:
+            text: 'Nouveau'
+            icon: 'new-box'
+
+        NavigationButton:
+            text: 'A venir'
+            icon: 'truck-delivery'
+
+        NavigationButton:
+            text: 'En cours'
+            icon: 'warehouse'
+
+
+<Popuppicture>:
+    title: ""
+    pos_hint: {"x":0.10, "top": 1}
+    separator_height: 0
+    size_hint: .8, .8
+    background: "ressource/background_popups.png"
+    padding: .9,.9
+    spacing: .9,.9
+
+    ScrollView:
+        GridLayout:
+            id: box
+            cols:1
+            padding: 15
+            spacing: 15
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height:150
+            halign:"center"
+
+<PopupInfos>:
+    title: ""
+    separator_height: 0
+    auto_dismiss: False
+    size_hint: 0.8, 0.8
+    pos_hint: {"x":0.12, "top": 0.8}
+    background: "ressource/background_popups.png"
+    padding: .9,.9
+    spacing: .9,.9
+
+    FloatLayout:
+        size_hint: 0.75, 0.75
+        pos_hint: {"x":0.12, "top": 0.8}
+##      job: (str(my_bid_label))
+
+        MDLabel:
+            id: id_deal_awaiting
+            disable: True
+            size_hint_x: 0
+            opacity: 0
+
+        MDLabel:
+            size_hint: 1, .3
+            pos_hint:{"center_x": .5, "center_y": 1.2}
+            halign: "center"
+            font_style: "H6"
+            bold: True
+            id: my_dates_label
+
+        MDLabel:
+            id: option_dem
+            size_hint: .7, .3
+            pos_hint:{"center_x": .5, "center_y": 1.05}
+            halign: "center"
+            bold: True
+            font_style: "Overline"
+
+        MDLabel:
+            id: my_depart_label
+            size_hint: .7, .3
+            pos_hint:{"center_x": .23, "center_y": .75}
+            halign: "center"
+            bold: True
+            font_style: "Overline"
+
+        MDLabel:
+            id: etg_depart
+            size_hint: .7, .3
+            pos_hint:{"center_x": .23, "center_y": .6}
+            halign: "center"
+            bold: True
+            font_style: "Overline"
+
+        MDIcon:
+            icon: "truck-fast-outline"
+            size_hint: .5, .3
+            pos_hint:{"center_x": .5, "center_y": .75}
+            halign: "center"
+
+        MDLabel:
+            id: my_distance_label
+            bold: True
+            size_hint: .5, .3
+            pos_hint:{"center_x": .5, "center_y": .85}
+            halign: "center"
+            font_style: "Overline"
+
+        MDLabel:
+            id: my_volume_label
+            bold: True
+            size_hint: .5, .3
+            pos_hint:{"center_x": .5, "center_y": .65}
+            halign: "center"
+            font_style: "Overline"
+
+        MDLabel:
+            id: my_end_label
+            bold: True
+            size_hint: .5, .3
+            pos_hint:{"center_x": .8, "center_y": .75}
+            halign: "center"
+            font_style: "Overline"
+
+        MDLabel:
+            id: etg_arrive
+            bold: True
+            size_hint: .5, .3
+            pos_hint:{"center_x": .8, "center_y": .6}
+            halign: "center"
+            font_style: "Overline"
+
+        MDLabel:
+            text: "Mon prix"
+            bold: True
+            size_hint: .5, .3
+            pos_hint:{"center_x": .5, "center_y": .5}
+            halign: "center"
+            font_style: "Overline"
+
+        MDLabel:
+            id: my_bid_label
+            bold: True
+            size_hint: .5, .3
+            pos_hint:{"center_x": .5, "center_y": .4}
+            halign: "center"
+            font_style: "Body2"
+
+        Button:
+            size_hint: None,None
+            size:42,42
+            halign:'center'
+            background_normal: 'ressource/button_gobid.png'
+            background_down: 'ressource/button_gobid_v.png'
+            pos_hint:{"center_x": .2, "center_y": .2}
+
+            on_press:
+                root.go_to_bid_popup()
+
+        Button:
+            size_hint: None,None
+            size:40,40
+            halign:'center'
+            background_normal: 'ressource/button_dismiss.png'
+            background_down: 'ressource/button_dismiss_v.png'
+            pos_hint:{"center_x": .8, "center_y": .2}
+            on_press:
+                root.dismiss()
+
+<PopupModification>:
+    title: ""                 # <<<<<<<<
+    separator_height: 0       # <<<<<<<<
+    auto_dismiss: False
+    size_hint: .5, .5
+    pos_hint: {"x":0.25, "top": 0.7}
+    background: "ressource/background_popups.png"
+    FloatLayout:
+        job: (str(my_bid))
+
+
+        Button:
+            id: up100
+            size_hint: None,None
+            size:90,40
+            halign:'center'
+            background_normal: 'ressource/button_plus.png'
+            background_down: 'ressource/button_plus_v.png'
+
+            pos_hint:{"center_x": .5, "center_y": .8}
+            on_press: root._on_press('up')
+            on_release: root._on_release()
+
+        MDLabel:
+            id: my_bid
+            halign:'center'
+            size_hint: .5, .5
+            pos_hint:{"center_x": .5, "center_y": .6}
+            bold: True
+
+
+
+        Button:
+            id: down100
+            size_hint: None,None
+            size:90,40
+            halign:'center'
+            background_normal: 'ressource/button_moins.png'
+            background_down: 'ressource/button_moins_v.png'
+            pos_hint:{"center_x": .5,"center_y": .4}
+            on_press: root._on_press('down')
+            on_release: root._on_release()
+
+        Button:
+            size_hint: None,None
+            size:40,40
+            halign:'center'
+            background_normal: 'ressource/button_savebid.png'
+            background_down: 'ressource/button_savebid_v.png'
+            pos_hint:{"center_x": .75,"center_y": .20}
+            on_press:
+                root.my_bid_to_down()
+                root.now_time_on_popup_mybid()
+                root.savebid(my_bid.text)
+                root.dismiss()
+
+        Label:
+            id: id_deal_awaiting_bx
+            disable: True
+            size_hint_x: 0
+            opacity: 0
+
+        Button:
+            size_hint: None,None
+            size:40,40
+            halign:'center'
+            background_normal: 'ressource/button_dismiss.png'
+            background_down: 'ressource/button_dismiss_v.png'
+
+            pos_hint:{"center_x": .25, "center_y": .20}
+            icon: 'close-box'
+            on_press:
+                root.dismiss()
